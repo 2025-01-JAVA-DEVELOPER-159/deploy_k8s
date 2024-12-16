@@ -3,7 +3,8 @@ NodeCnt = 2
 
 Vagrant.configure("2") do |config|
   
-  config.vm.box = "rockylinux/8"  
+  config.vm.box = "rockylinux/8"
+  config.vm.box_version="8.8-20230518.0"  
   config.disksize.size = "30GB"  
   config.vbguest.auto_update = false
   config.vm.synced_folder "./", "/vagrant", disabled: true  
