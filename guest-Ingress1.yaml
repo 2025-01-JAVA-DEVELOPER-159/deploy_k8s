@@ -32,6 +32,6 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: svc-guest-v1
+            name: service-guest-v1
             port:
               number: 80
