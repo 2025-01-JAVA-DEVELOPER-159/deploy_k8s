@@ -8,6 +8,7 @@ spec:
   containers:
   - name: container
     image: academyitwill/guest:v1
+    imagePullPolicy: Always
 ---
 apiVersion: v1
 kind: Service

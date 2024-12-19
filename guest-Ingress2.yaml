@@ -8,6 +8,7 @@ spec:
   containers:
   - name: container
     image: academyitwill/guest:v2
+    imagePullPolicy: Always
 ---
 apiVersion: v1
 kind: Service
@@ -25,7 +26,7 @@ metadata:
   name: ingress-guest-v2
   annotations:
     nginx.ingress.kubernetes.io/canary: "true"
-    nginx.ingress.kubernetes.io/canary-weight: "10"
+    nginx.ingress.kubernetes.io/canary-weight: "30"
 spec:
   ingressClassName: nginx
   rules:
