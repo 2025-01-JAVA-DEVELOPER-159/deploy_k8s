@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: guest-replica2
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: guest2
+  template:
+    metadata:
+      name: pod-guest2
+      labels:
+        app: guest2
+    spec:
+      containers:
+      - name: container
+        image: academyitwill/guest:v2
+        imagePullPolicy: Always
+      terminationGracePeriodSeconds: 0
+
+
