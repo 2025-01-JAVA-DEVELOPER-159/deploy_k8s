@@ -1,11 +1,11 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: deployment-guest
+  name: guest-deployment
 spec:
   selector:
     matchLabels:
-      app: guest
+      app: guest-pod
   replicas: 2
   strategy:
     type: Recreate
@@ -13,10 +13,10 @@ spec:
   template:
     metadata:
       labels:
-        app: guest
+        app: guest-pod
     spec:
       containers:
-      - name: container
+      - name: guest-container
         image: academyitwill/guest:v1
         imagePullPolicy: Always
         env:
@@ -27,10 +27,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: service-guest
+  name: guest-service
 spec:
   selector:
-   app: guest
+   app: guest-pod
   ports:
   - port: 80
     targetPort: 80
