@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-initdb-config
+data:
+  init.sql: |
+    GRANT ALL PRIVILEGES ON *.* TO 's5t1'@'%' WITH GRANT OPTION;
+    FLUSH PRIVILEGES;
