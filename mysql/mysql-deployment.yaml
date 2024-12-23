@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mysql
+  name: mysql-deployment
 spec:
   selector:
     matchLabels:
-      app: mysql
+      app: mysql-pod
   template:
     metadata:
       labels:
-        app: mysql
+        app: mysql-pod
     spec:
       containers:
       - image: mysql
-        name: mysql
+        name: mysql-container
         env:
         - name: MYSQL_ROOT_PASSWORD
           valueFrom:
@@ -37,7 +37,7 @@ spec:
               key: mysql-database-name
         ports:
         - containerPort: 3306
-          name: mysql
+          name: mysql-container
         volumeMounts:
         - name: mysql-storage
           mountPath: /var/lib/mysql
