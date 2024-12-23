@@ -20,7 +20,7 @@ spec:
         image: academyitwill/guest:v1
         imagePullPolicy: Always
         env:
-          - name: SPRING_PROFILES_ACTIVE
+          - name: USER_PROFILE
             value: prod-mysql 
       terminationGracePeriodSeconds: 10
 ---
