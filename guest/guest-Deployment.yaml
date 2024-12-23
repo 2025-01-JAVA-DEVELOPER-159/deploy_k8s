@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: container
-        image: academyitwill/guest:v1
+        image: academyitwill/guest
         imagePullPolicy: Always
         env:
           - name: USER_PROFILE
