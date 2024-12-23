@@ -10,4 +10,4 @@ spec:
     targetPort: 3306
     nodePort: 30006
   selector:
-    app: mysql
+    app: mysql-pod
