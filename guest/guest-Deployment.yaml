@@ -21,7 +21,7 @@ spec:
         imagePullPolicy: Always
         env:
           - name: USER_PROFILE
-            value: prod-mysql 
+            value: remote-oracle 
       terminationGracePeriodSeconds: 10
 ---
 apiVersion: v1
