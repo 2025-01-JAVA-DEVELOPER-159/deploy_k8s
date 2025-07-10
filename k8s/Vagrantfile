@@ -95,6 +95,8 @@ EOF
 
 sysctl --system
 
+
+
 echo '======== [6-2] 컨테이너 런타임 (containerd 설치) ========'
 echo '======== [6-2-1] containerd 패키지 설치 (option2) ========'
 echo '======== [6-2-1-1] docker engine 설치 ========'
@@ -148,6 +150,17 @@ echo '======== [8-2] kubectl 사용 설정 ========'
 mkdir -p $HOME/.kube
 cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 chown $(id -u):$(id -g) $HOME/.kube/config
+
+echo '======== [8-3]도커 설치 ==================='
+yum install -y epel-release
+yum install -y jq
+yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+yum install -y docker-ce-3:23.0.6-1.el8 docker-ce-cli-1:23.0.6-1.el8 containerd.io-1.6.21-3.1.el8
+systemctl daemon-reload
+systemctl enable --now docker
+USERNAME="academyitwill"
+PASSWORD="@roskfl302@"
+docker login  -u $USERNAME -p $PASSWORD
 
 echo '======== [8-3] Pod Network 설치 (calico) ========'
 kubectl create -f https://raw.githubusercontent.com/k8s-1pro/install/main/ground/k8s-1.27/calico-3.26.4/calico.yaml
