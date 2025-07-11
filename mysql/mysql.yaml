@@ -48,7 +48,7 @@ spec:
   resources:
     requests:
       storage: 1Gi
-  storageClassName: ""    
+    
 ---
 ##### mysql-deployment.yaml #####    
 apiVersion: apps/v1
@@ -67,8 +67,8 @@ spec:
         app: mysql-pod
     spec:
       containers:
-        - image: mysql
-          name: mysql-container
+        - name: mysql-container
+          image: mysql:8.0
           env:
             - name: MYSQL_ROOT_PASSWORD
               value: root   # 보안을 위해 Secret 사용하는 것이 좋음
@@ -95,16 +95,27 @@ spec:
             name: mysql-initdb-config    
 ---
 ##### mysql-service.yaml #####   
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: mysqlservice
+# spec:
+#   type: NodePort
+#   ports:
+#   - name: mysql-port
+#     port: 3306
+#     targetPort: 3306
+#     nodePort: 30006
+#   selector:
+#     app: mysql-pod
 apiVersion: v1
 kind: Service
 metadata:
   name: mysqlservice
 spec:
-  type: NodePort
   ports:
-  - name: mysql-port
-    port: 3306
-    targetPort: 3306
-    nodePort: 30006
+    - port: 3306
   selector:
     app: mysql-pod
+  clusterIP: None  # Headless로 할 경우 None (옵션)
+
