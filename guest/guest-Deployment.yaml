@@ -22,6 +22,7 @@ spec:
         env:
           - name: USER_PROFILE
             value: prod-mysql 
+            
       terminationGracePeriodSeconds: 10
 ---
 apiVersion: v1

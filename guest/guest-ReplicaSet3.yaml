@@ -17,7 +17,7 @@ spec:
       - name: container
         image: academyitwill/guest:v3
         env:
-          - name: SPRING_PROFILES_ACTIVE
+          - name: USER_PROFILE
             value: prod-mysql   # ← 여기서 "remote-oracle", "local-mysql", "prod-mysql" 등 지정
         imagePullPolicy: Always
       terminationGracePeriodSeconds: 0
