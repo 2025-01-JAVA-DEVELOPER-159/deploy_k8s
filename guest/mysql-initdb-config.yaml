@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-initdb-config
+data:
+  init.sql: |
+    CREATE DATABASE IF NOT EXISTS guestdb;
+    CREATE USER IF NOT EXISTS 'jdeveloper'@'%' IDENTIFIED BY 'jdeveloper';
+    GRANT ALL ON guestdb.* TO 'jdeveloper'@'%';
+    FLUSH PRIVILEGES;
