@@ -6,6 +6,8 @@ spec:
   selector:
     matchLabels:
       app: mysql-pod
+  strategy:
+    type: Recreate    
   template:
     metadata:
       labels:

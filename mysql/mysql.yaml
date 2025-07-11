@@ -1,3 +1,30 @@
+##### mysql-configmap.yaml #####
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-initdb-config
+data:
+  init.sql: |
+    grant all on guestdb.* to 'jdeveloper'@'%';
+---
+##### mysql-secret.yaml #####
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mysql-secret
+type: Opaque
+data:
+  #mysql-root-password: root
+  #mysql-user-id: jdeveloper
+  #mysql-user-password: jdeveloper
+  #mysql-database-name: guestdb
+  #https://www.base64encode.net/
+  mysql-root-password: cm9vdA==
+  mysql-user-id: amRldmVsb3Blcg==
+  mysql-user-password: amRldmVsb3Blcg==
+  mysql-database-name: Z3Vlc3RkYg==
+---
+##### mysql-pv.yaml #####
 apiVersion: v1
 kind: PersistentVolume
 metadata:
@@ -8,8 +35,9 @@ spec:
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: /mnt/data/mysql   # 로컬 테스트용. 실무에선 NFS, EBS 등 사용
----    
+    path: /mnt/data/mysql
+---
+##### mysql-pvc.yaml #####    
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -20,7 +48,9 @@ spec:
   resources:
     requests:
       storage: 1Gi
+  storageClassName: ""    
 ---
+##### mysql-deployment.yaml #####    
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -28,29 +58,29 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: mysql
+      app: mysql-pod
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
-        app: mysql
+        app: mysql-pod
     spec:
       containers:
-        - name: mysql
-          image: mysql:8.0
+        - image: mysql
+          name: mysql-container
           env:
             - name: MYSQL_ROOT_PASSWORD
               value: root   # 보안을 위해 Secret 사용하는 것이 좋음
-            - name: MYSQL_DATABASE
-              value: guestdb
             - name: MYSQL_USER
               value: jdeveloper
             - name: MYSQL_PASSWORD
               value: jdeveloper
+            - name: MYSQL_DATABASE
+              value: guestdb  
           ports:
             - containerPort: 3306
-              name: mysql
+              name: mysql-container
           volumeMounts:
             - name: mysql-storage
               mountPath: /var/lib/mysql
@@ -64,13 +94,17 @@ spec:
           configMap:
             name: mysql-initdb-config    
 ---
+##### mysql-service.yaml #####   
 apiVersion: v1
 kind: Service
 metadata:
   name: mysqlservice
 spec:
+  type: NodePort
   ports:
-    - port: 3306
+  - name: mysql-port
+    port: 3306
+    targetPort: 3306
+    nodePort: 30006
   selector:
-    app: mysql
-  clusterIP: None  # Headless로 할 경우 None (옵션)
+    app: mysql-pod
