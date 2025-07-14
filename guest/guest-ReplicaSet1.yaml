@@ -16,6 +16,9 @@ spec:
       containers:
       - name: container
         image: academyitwill/guest:v1
+        env:
+          - name: USER_PROFILE
+            value: remote-oracle   # ← 여기서 "remote-oracle", "local-mysql", "prod-mysql" 등 지정  
         imagePullPolicy: Always
       terminationGracePeriodSeconds: 0
 ---

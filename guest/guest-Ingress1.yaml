@@ -8,6 +8,9 @@ spec:
   containers:
   - name: container
     image: academyitwill/guest:v1
+    env:
+     - name: USER_PROFILE
+       value: remote-oracle 
     imagePullPolicy: Always
 ---
 apiVersion: v1
