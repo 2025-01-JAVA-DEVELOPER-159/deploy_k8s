@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: guest-backend-deployment
+spec:
+  selector:
+    matchLabels:
+      app: guest-backend-pod
+  replicas: 1
+  strategy:
+    type: Recreate
+  revisionHistoryLimit: 1
+  template:
+    metadata:
+      labels:
+        app: guest-backend-pod
+    spec:
+      containers:
+      - name: guest-backend-container
+        image: academyitwill/guest_backend
+        env:
+          - name: USER_PROFILE
+            value: dev1 
+      terminationGracePeriodSeconds: 10
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: guest-backend-service
+spec:
+  selector:
+   app: guest-backend-pod
+  ports:
+  - protocol: TCP 
+    port: 8080
+    targetPort: 8080
+

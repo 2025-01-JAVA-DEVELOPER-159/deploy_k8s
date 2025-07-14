@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: guest-frontend-deployment
+spec:
+  selector:
+    matchLabels:
+      app: guest-frontend-pod
+  replicas: 1
+  strategy:
+    type: Recreate
+  revisionHistoryLimit: 1
+  template:
+    metadata:
+      labels:
+        app: guest-frontend-pod
+    spec:
+      containers:
+      - name: guest-frontend-container
+        image: academyitwill/guest_frontend
+      terminationGracePeriodSeconds: 10
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: guest-frontend-service
+spec:
+  selector:
+   app: guest-backend-pod
+  ports:
+  - protocol: TCP 
+    port: 80
+    targetPort: 80
+    nodePort: 30005
+  type: NodePort
