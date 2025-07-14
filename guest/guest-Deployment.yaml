@@ -6,7 +6,7 @@ spec:
   selector:
     matchLabels:
       app: guest-pod
-  replicas: 2
+  replicas: 1
   strategy:
     type: Recreate
   revisionHistoryLimit: 1
@@ -17,8 +17,7 @@ spec:
     spec:
       containers:
       - name: guest-container
-        image: academyitwill/guest:v2
-        imagePullPolicy: Always
+        image: academyitwill/guest
         env:
           - name: USER_PROFILE
             value: prod-mysql 
