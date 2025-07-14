@@ -26,7 +26,7 @@ metadata:
   name: guest-frontend-service
 spec:
   selector:
-   app: guest-backend-pod
+   app: guest-frontend-pod
   ports:
   - protocol: TCP 
     port: 80
